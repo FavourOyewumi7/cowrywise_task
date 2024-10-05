@@ -21,11 +21,10 @@
         </div>
       </div>
       <div class="image-grid" v-else>
-
         <ImageView v-for="image in this.store.searched_images" :key="image.id" :image="image"
           :class="getSizeClass(image)" />
-
       </div>
+      <ModalView :image="this.store.images[this.isSelected]" :show="this.isModalOpen" />
     </div>
   </div>
 
@@ -34,21 +33,39 @@
 <script>
 import { store } from '@/store';
 import ImageView from '@/components/imageview.vue';
+import ModalView from '@/components/modal.vue';
 export default {
   name: "SearchPage",
   components: [
-    ImageView
+    ImageView,
+    ModalView
   ],
   data() {
     return {
-      store
+      store,
+      isModalOpen: false,
+      isSelected: null,
+      modal_data: {}
     }
   },
+  created() {
+        this.model_data = this.store.searched_images 
+    },
   methods: {
     getSizeClass(image) {
       if (image.width / image.height >= 1.5) return 'image-item--very-large'
       if (image.width / image.height >= 1.2) return 'image-item--large'
       return 'image-item--medium'
+    },
+    openModal(index) {
+      this.isSelected = index;
+      console.log(this.isSelected)
+      console.log(store.images[this.isSelected])
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+      this.isSelected = null;
     }
   }
 }
@@ -74,32 +91,35 @@ export default {
 .page-bar {
   width: 70%;
 }
-.search-word-begin{
+
+.search-word-begin {
   font-weight: 700;
   font-size: 2rem;
-  color: #233c62; 
+  color: #233c62;
 }
-.search-word{
+
+.search-word {
   color: #4771af !important;
 }
+
 .image-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(250px, 1fr));
-    grid-auto-rows: 10px;
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 1.9rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  grid-auto-rows: 10px;
+  grid-column-gap: 2.5rem;
+  grid-row-gap: 1.9rem;
 }
 
 .image-item--medium {
-    grid-row-end: span 5;
+  grid-row-end: span 5;
 }
 
 .image-item--large {
-    grid-row-end: span 7;
+  grid-row-end: span 7;
 }
 
 .image-item--very-large {
-    grid-row-end: span 10;
+  grid-row-end: span 10;
 }
 
 .result-area {
@@ -114,13 +134,15 @@ export default {
   position: absolute;
   top: -2.5rem;
 }
-.skeleton-grid{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(250px, 1fr));
-    grid-auto-rows: 10px;
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 1.9rem;
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  grid-auto-rows: 10px;
+  grid-column-gap: 2.5rem;
+  grid-row-gap: 1.9rem;
 }
+
 .skeleton-loader {
   background-color: #ccc;
   height: 8rem;
@@ -144,17 +166,20 @@ export default {
     background-color: #f0f0f0;
   }
 }
-.skeleton-text{
+
+.skeleton-text {
   position: absolute;
   bottom: 1rem;
   height: 2rem;
 }
-.skeleton-text-lg{
+
+.skeleton-text-lg {
   height: 0.4rem;
   background-color: #eee;
   width: 50%;
 }
-.skeleton-text-sm{
+
+.skeleton-text-sm {
   height: 0.2rem;
   background-color: #eee;
   width: 30%;

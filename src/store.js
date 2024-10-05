@@ -10,12 +10,12 @@ export const store = reactive({
     searched_images:'',
     async fetchHomeImages(){
         this.isloading = true
-        // await new Promise(r => setTimeout(r, 10000));
+        await new Promise(r => setTimeout(r, 4000));
         try{
         const data = await axios.get(`${process.env.VUE_APP_UNSPLASH_API}/search/photos?query=african&client_id=${process.env.VUE_APP_UNSPLASH_CLIENT_KEY}&per_page=8`)
 
         this.images = data.data.results
-
+        console.log(this.images)
         }
         catch (error) {
             this.error = 'An error occurred while fetching photos';
@@ -29,7 +29,7 @@ export const store = reactive({
         this.isloading = true
         this.search_word = word
         router.push({name:'search'})
-        // await new Promise(r => setTimeout(r, 20000));
+        await new Promise(r => setTimeout(r, 7000));
         try{
         const new_data = await axios.get(`${process.env.VUE_APP_UNSPLASH_API}/search/photos?query=${word}&client_id=${process.env.VUE_APP_UNSPLASH_CLIENT_KEY}&per_page=8`)
 
