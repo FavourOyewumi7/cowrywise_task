@@ -100,6 +100,9 @@ export default {
 @media (max-width: 480px) {
   .modal-text{
    padding-left : 0.5rem;}
+   .modal-container{
+    width: 80%;
+   }
 }
  h2{
   font-size: medium;
