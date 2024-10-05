@@ -23,9 +23,7 @@ export default {
       store
     }
   },
-  created(){
-    console.log(store.isloading)
-  }
+
 }
 </script>
 

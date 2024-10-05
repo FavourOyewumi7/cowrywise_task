@@ -21,7 +21,7 @@
                         :class="getSizeClass(image)" @click="openModal(index)"/>
 
                 </div>
-                <ModalView  v-if="isModalOpen && isSelected !== null" :image="this.store.images[this.isSelected]" :show="this.isModalOpen "  @close="closeModal"/>
+                <ModalView  v-if="isModalOpen1 && isSelected !== null" :image="this.store.images[this.isSelected]" :show="this.isModalOpen1 "  @close="closeModal"/>
             </div>
         </div>
 
@@ -43,14 +43,14 @@ export default {
     data() {
         return {
             store,
-            isModalOpen: false,
+            isModalOpen1: false,
             isSelected: null,
             modal_data:{}
         }
     },
     created() {
         this.store.fetchHomeImages()
-        this.model_data = this.store.images 
+    
     },
     methods: {
         getSizeClass(image) {
@@ -60,10 +60,10 @@ export default {
         },
         openModal(index) {
             this.isSelected = index;
-            this.isModalOpen = true;
+            this.isModalOpen1 = true;
         },
         closeModal() {
-            this.isModalOpen = false;
+            this.isModalOpen1 = false;
             this.isSelected = null;
         }
     }
@@ -124,6 +124,26 @@ export default {
     animation: shimmer 1.5s infinite;
     position: relative;
     border-radius: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+  .skeleton-grid{
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @keyframes shimmer {

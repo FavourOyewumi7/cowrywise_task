@@ -15,7 +15,6 @@ export const store = reactive({
         const data = await axios.get(`${process.env.VUE_APP_UNSPLASH_API}/search/photos?query=african&client_id=${process.env.VUE_APP_UNSPLASH_CLIENT_KEY}&per_page=8`)
 
         this.images = data.data.results
-        console.log(this.images)
         }
         catch (error) {
             this.error = 'An error occurred while fetching photos';
@@ -32,7 +31,6 @@ export const store = reactive({
         await new Promise(r => setTimeout(r, 7000));
         try{
         const new_data = await axios.get(`${process.env.VUE_APP_UNSPLASH_API}/search/photos?query=${word}&client_id=${process.env.VUE_APP_UNSPLASH_CLIENT_KEY}&per_page=8`)
-
         this.searched_images = new_data.data.results
 
         }

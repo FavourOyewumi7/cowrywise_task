@@ -21,10 +21,10 @@
         </div>
       </div>
       <div class="image-grid" v-else>
-        <ImageView v-for="image in this.store.searched_images" :key="image.id" :image="image"
+        <ImageView v-for="(image, index) in this.store.searched_images" :key="image.id" :image="image" @click="openModal(index)"
           :class="getSizeClass(image)" />
       </div>
-      <ModalView :image="this.store.images[this.isSelected]" :show="this.isModalOpen" />
+      <ModalView  v-if="isModalOpen && isSelected !== null" :image="this.store.searched_images[this.isSelected]" :show="this.isModalOpen"  @close="closeModal"/>
     </div>
   </div>
 
@@ -44,13 +44,10 @@ export default {
     return {
       store,
       isModalOpen: false,
-      isSelected: null,
-      modal_data: {}
+      isSelected: null
     }
   },
-  created() {
-        this.model_data = this.store.searched_images 
-    },
+
   methods: {
     getSizeClass(image) {
       if (image.width / image.height >= 1.5) return 'image-item--very-large'
@@ -59,8 +56,6 @@ export default {
     },
     openModal(index) {
       this.isSelected = index;
-      console.log(this.isSelected)
-      console.log(store.images[this.isSelected])
       this.isModalOpen = true;
     },
     closeModal() {
@@ -120,6 +115,24 @@ export default {
 
 .image-item--very-large {
   grid-row-end: span 10;
+}
+
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+  .skeleton-grid{
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .result-area {
