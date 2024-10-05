@@ -55,6 +55,7 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     left: 1.5rem;
+    color: #4771af;
 
 }
 
@@ -66,7 +67,11 @@ export default {
     padding-left: 4.5rem;
     height: 3rem;
     width: 100%;
+    color: #4771af;
 
+}
+input::placeholder{
+    color: #4771af;
 }
 
 .search-bar input:focus {

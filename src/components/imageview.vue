@@ -1,8 +1,8 @@
 <template>
   <div class="image-container">
-    <div class="image-card"
+    <div class="image-card" 
       v-bind:style="{ backgroundImage: 'url(' + image.urls.raw + ')', backgroundPosition: 'center' }">
-      <div class="image-info">
+      <div class="image-info" >
         <p class="image-name">{{ image.user.name }}</p>
         <p class="image-loc">{{ image.user.location }}</p>
       </div>
@@ -11,10 +11,20 @@
 </template>
 
 <script>
+import { store } from '@/store';
+
 export default {
   name: 'ImageView',
   props: {
     image: Object
+  },
+  data(){
+    return{
+      store
+    }
+  },
+  created(){
+    console.log(store.isloading)
   }
 }
 </script>
@@ -56,5 +66,24 @@ export default {
 .image-loc {
   font-size: smaller;
   font-weight: 300;
+}
+.skeletonloader {
+  background-color: #f0f0f0;
+  height: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: #f0f0f0;
+  }
+  50% {
+    background-color: #e6e6e6;
+  }
+  100% {
+    background-color: #f0f0f0;
+  }
 }
 </style>
